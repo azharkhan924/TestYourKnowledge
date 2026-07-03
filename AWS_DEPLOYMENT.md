@@ -47,9 +47,36 @@ Open your local terminal and navigate to the folder where your download key pair
 
 ## Step 3: Install Docker and Docker Compose
 
-Once connected to your EC2 instance, install Docker:
+Once connected to your EC2 instance, install Docker based on the OS you chose:
 
-### For Ubuntu 22.04 LTS:
+### Option A: For Amazon Linux 2023 / Amazon Linux 2:
+```bash
+# Update packages
+sudo dnf update -y  # Use "sudo yum update -y" on Amazon Linux 2
+
+# Install Docker
+sudo dnf install -y docker  # Use "sudo yum install -y docker" on Amazon Linux 2
+
+# Start and enable Docker service
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Add ec2-user to the docker group so you don't need sudo
+sudo usermod -aG docker ec2-user
+
+# Log out and log back in to apply group changes
+exit
+```
+*After logging out, reconnect via SSH:*
+```bash
+ssh -i testplatform-key.pem ec2-user@<EC2_PUBLIC_IP>
+```
+
+### Option B: For Ubuntu 22.04 LTS:
 ```bash
 # Update packages
 sudo apt-get update -y
@@ -62,10 +89,10 @@ sudo apt-get install -y docker.io
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# Add your user to the docker group so you don't need sudo for docker commands
+# Add your user to the docker group so you don't need sudo
 sudo usermod -aG docker $USER
 
-# Log out and log back in to apply docker group changes
+# Log out and log back in to apply group changes
 exit
 ```
 *After logging out, reconnect via SSH:*
