@@ -1,5 +1,9 @@
-// Change this if the backend runs on a different host/port.
-const API_BASE = 'http://localhost:8080/api';
+// Change this to your deployed backend URL if hosting frontend and backend on different servers
+const PROD_API_BASE = ''; 
+
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? (window.location.port === '8080' ? '/api' : 'http://localhost:8080/api')
+  : (PROD_API_BASE || window.location.origin + '/api');
 
 async function apiRequest(path, { method = 'GET', body, isForm = false, auth = false } = {}) {
   const headers = {};
