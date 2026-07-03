@@ -29,11 +29,7 @@ services:
         fromDatabase:
           name: testplatform-db
           property: password
-      - key: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require
-      - key: SPRING_DATASOURCE_USERNAME
-        value: ${DB_USER}
-      - key: SPRING_DATASOURCE_PASSWORD
-        value: ${DB_PASSWORD}
+      - key: DB_SSL_OPTION
+        value: ?sslmode=require
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
