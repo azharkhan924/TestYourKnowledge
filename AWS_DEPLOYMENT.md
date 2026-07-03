@@ -7,8 +7,7 @@ This guide explains how to deploy the Test Platform to a single AWS EC2 virtual 
 ## Prerequisites
 * An active **AWS Account**.
 * A terminal client or SSH client installed locally.
-* Your project files pushed to a public or private Git repository (e.g., GitHub).
-* A free **DuckDNS** account to register a subdomain.
+* Your project files pushed to a Git repository (e.g., GitHub).
 
 ---
 
@@ -25,26 +24,14 @@ This guide explains how to deploy the Test Platform to a single AWS EC2 virtual 
    * Select/Create a Security Group.
    * Add the following inbound rules:
      * **SSH:** Port `22` (Source: *My IP* or *0.0.0.0/0* to access terminal).
-     * **HTTP:** Port `80` (Source: *0.0.0.0/0* for HTTP challenges & redirects).
-     * **HTTPS:** Port `443` (Source: *0.0.0.0/0* for secure web traffic).
+     * **HTTP:** Port `80` (Source: *0.0.0.0/0* for HTTP web traffic).
 5. Click **Launch Instance**.
-
----
-
-## Step 1.5: Configure DuckDNS
-
-Since SSL certificates cannot be generated for raw IP addresses, you need to map a domain name to your EC2 IP.
-
-1. Go to [duckdns.org](https://www.duckdns.org/) and log in (e.g. via Google or GitHub).
-2. Choose a subdomain (e.g. `testplatform-azhar`) and click **add domain**.
-3. Under your domain listing, copy your EC2 instance's **Public IPv4 Address** and paste it into the IP text field next to your subdomain, then click **update ip**.
-4. Now, your domain `testplatform-azhar.duckdns.org` points directly to your EC2 instance.
 
 ---
 
 ## Step 2: Connect to the EC2 Instance
 
-Open your local terminal and navigate to the folder where your download key pair (`testplatform-key.pem`) is located.
+Open your local terminal and navigate to the folder where your downloaded key pair (`testplatform-key.pem`) is located.
 
 1. Set the correct file permissions on the key:
    ```bash
@@ -60,36 +47,9 @@ Open your local terminal and navigate to the folder where your download key pair
 
 ## Step 3: Install Docker and Docker Compose
 
-Once connected to your EC2 instance, install Docker based on the OS you chose:
+Once connected to your EC2 instance, install Docker:
 
-### Option A: For Amazon Linux 2023 / Amazon Linux 2:
-```bash
-# Update packages
-sudo dnf update -y  # Use "sudo yum update -y" on Amazon Linux 2
-
-# Install Docker and Git
-sudo dnf install -y docker git  # Use "sudo yum install -y docker git" on Amazon Linux 2
-
-# Start and enable Docker service
-sudo systemctl start docker
-sudo systemctl enable docker
-
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Add ec2-user to the docker group so you don't need sudo
-sudo usermod -aG docker ec2-user
-
-# Log out and log back in to apply group changes
-exit
-```
-*After logging out, reconnect via SSH:*
-```bash
-ssh -i testplatform-key.pem ec2-user@<EC2_PUBLIC_IP>
-```
-
-### Option B: For Ubuntu 22.04 LTS:
+### For Ubuntu 22.04 LTS:
 ```bash
 # Update packages
 sudo apt-get update -y
@@ -108,6 +68,7 @@ sudo usermod -aG docker $USER
 # Log out and log back in to apply group changes
 exit
 ```
+
 *After logging out, reconnect via SSH:*
 ```bash
 ssh -i testplatform-key.pem ubuntu@<EC2_PUBLIC_IP>
@@ -122,11 +83,7 @@ ssh -i testplatform-key.pem ubuntu@<EC2_PUBLIC_IP>
    git clone https://github.com/azharkhan924/TestYourKnowledge.git
    cd TestYourKnowledge
    ```
-2. Open `docker-compose.yml` on the EC2 instance and change `your-subdomain.duckdns.org` to your actual DuckDNS subdomain:
-   ```yaml
-      - DUCKDNS_DOMAIN=testplatform-azhar.duckdns.org
-   ```
-3. Launch the application using Docker Compose:
+2. Launch the application using Docker Compose:
    ```bash
    docker-compose up -d --build
    ```
@@ -139,10 +96,10 @@ ssh -i testplatform-key.pem ubuntu@<EC2_PUBLIC_IP>
 
 ## Step 5: Access the Application
 
-Caddy will automatically request and install the Let's Encrypt SSL certificate for your DuckDNS domain. Within a minute, your app will be live and secure:
+Once the containers are running, the application will be accessible directly via your EC2 instance's Public IP over plain HTTP:
 
-* **Student Portal:** `https://your-subdomain.duckdns.org/index.html`
-* **Admin Portal:** `https://your-subdomain.duckdns.org/admin-login.html`
+* **Student Portal / Landing Page:** `http://<EC2_PUBLIC_IP>/index.html`
+* **Teacher Portal:** `http://<EC2_PUBLIC_IP>/admin-login.html`
 
 ---
 
@@ -152,7 +109,7 @@ Caddy will automatically request and install the Let's Encrypt SSL certificate f
   ```bash
   docker-compose ps
   ```
-* **View application logs:**
+* **View application logs (to check OTP codes printed in console):**
   ```bash
   docker-compose logs -f web-app
   ```
