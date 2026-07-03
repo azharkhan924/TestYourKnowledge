@@ -1,5 +1,6 @@
 package com.testplatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Test {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = true)
+    @JsonIgnore
     private Teacher teacher;
 
     public Long getId() { return id; }
