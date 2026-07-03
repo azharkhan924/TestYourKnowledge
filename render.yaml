@@ -7,7 +7,7 @@ services:
   - type: web
     name: testplatform-service
     runtime: docker
-    dockerfile: Dockerfile
+    dockerfilePath: Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
