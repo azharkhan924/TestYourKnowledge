@@ -36,7 +36,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - DUCKDNS_DOMAIN=your-subdomain.duckdns.org  # Change this to your actual DuckDNS domain!
+      - DUCKDNS_DOMAIN=test-platform.duckdns.org  # Change this to your actual DuckDNS domain!
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data

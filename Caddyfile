@@ -1,5 +1,5 @@
 # Replace this with your actual DuckDNS subdomain (e.g., testplatform-azhar.duckdns.org)
 # You can also set the DUCKDNS_DOMAIN environment variable in docker-compose.yml.
-{$DUCKDNS_DOMAIN:your-subdomain.duckdns.org} {
+{$DUCKDNS_DOMAIN:test-platform.duckdns.org} {
     reverse_proxy web-app:8080
 }
