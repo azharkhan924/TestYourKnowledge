@@ -54,8 +54,8 @@ Once connected to your EC2 instance, install Docker based on the OS you chose:
 # Update packages
 sudo dnf update -y  # Use "sudo yum update -y" on Amazon Linux 2
 
-# Install Docker and Git
-sudo dnf install -y docker git  # Use "sudo yum install -y docker git" on Amazon Linux 2
+# Install Docker, Git, and Buildx Plugin
+sudo dnf install -y docker git docker-buildx-plugin  # Use "sudo yum install -y docker git docker-buildx-plugin" on Amazon Linux 2
 
 # Start and enable Docker service
 sudo systemctl start docker
