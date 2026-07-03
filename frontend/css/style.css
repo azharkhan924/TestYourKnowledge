@@ -406,7 +406,122 @@ tr:last-child td { border-bottom: none; }
   padding: 24px;
 }
 
+@media (max-width: 768px) {
+  /* Header adjustments for mobile */
+  header {
+    padding: 12px 16px;
+  }
+  .header-container {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* Admin Header */
+  .admin-header {
+    padding: 12px 16px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  /* Exam View */
+  #view-exam .container.wide {
+    flex-direction: column;
+    padding: 16px 12px;
+    gap: 16px;
+  }
+  #view-exam .card {
+    flex: none !important;
+    width: 100% !important;
+    position: static !important; /* disable sticky sidebar on mobile */
+  }
+}
+
 @media (max-width: 640px) {
   .ticket-header, .ticket-body { padding-left: 20px; padding-right: 20px; }
   .row { flex-direction: column; }
 }
+
+@media (max-width: 600px) {
+  /* General elements */
+  .hero-text h1 {
+    font-size: 28px !important;
+  }
+  
+  /* Stack list item spreads */
+  .spread {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .spread > button, .spread > .row {
+    width: 100%;
+  }
+  .spread > .row > button {
+    flex: 1;
+  }
+
+  .about-card-responsive {
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 24px 12px;
+  }
+  .ticket-header, .ticket-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .card {
+    padding: 16px;
+  }
+  
+  /* Tabs scrollable navigation */
+  .tabs {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* Exam top bar font adjustments */
+  .exam-bar {
+    padding: 10px 16px;
+  }
+  .exam-bar .title {
+    font-size: 14px;
+  }
+  .timer {
+    font-size: 16px;
+    padding: 4px 10px;
+  }
+  
+  /* Overlay padding */
+  .overlay > div {
+    padding: 20px !important;
+  }
+}
+
+/* Results Table scroll wrapper */
+#results-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
