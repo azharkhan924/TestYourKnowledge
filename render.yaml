@@ -9,17 +9,31 @@ services:
     runtime: docker
     dockerfilePath: Dockerfile
     envVars:
-      - key: SPRING_DATASOURCE_URL
+      - key: DB_HOST
         fromDatabase:
           name: testplatform-db
-          property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: testplatform-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: testplatform-db
+          property: database
+      - key: DB_USER
         fromDatabase:
           name: testplatform-db
           property: user
-      - key: SPRING_DATASOURCE_PASSWORD
+      - key: DB_PASSWORD
         fromDatabase:
           name: testplatform-db
           property: password
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require
+      - key: SPRING_DATASOURCE_USERNAME
+        value: ${DB_USER}
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: ${DB_PASSWORD}
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
