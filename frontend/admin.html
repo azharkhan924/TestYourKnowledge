@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="admin-header">
+  <div class="brand"><div class="seal" style="border-color:#fff; color:#fff; width:32px; height:32px; font-size:14px;">A</div>Admin Desk</div>
+  <button class="btn btn-outline btn-sm" style="color:#fff; border-color:rgba(255,255,255,0.4);" id="logout-btn">Log Out</button>
+</div>
+
+<div class="container wide">
+  <div class="tabs mt-24" id="tabs">
+    <button class="tab active" data-tab="create">Create Test</button>
+    <button class="tab" data-tab="waiting">Waiting Room</button>
+    <button class="tab" data-tab="results">Results</button>
+  </div>
+
+  <!-- ============ CREATE TEST ============ -->
+  <div class="tab-panel" id="panel-create">
+    <div class="card mt-24">
+      <h2 style="font-size:19px;">New Test</h2>
+      <p class="muted mt-8">Set up the basics, then add questions by pasting JSON or uploading a text file.</p>
+
+      <div class="row mt-24">
+        <div class="field">
+          <label for="new-title">Title</label>
+          <input type="text" id="new-title" placeholder="e.g. Java Backend Screening Round 1">
+        </div>
+        <div class="field">
+          <label for="new-duration">Duration (minutes)</label>
+          <input type="number" id="new-duration" placeholder="30" min="1">
+        </div>
+      </div>
+      <div class="field">
+        <label for="new-desc">Description (optional)</label>
+        <input type="text" id="new-desc" placeholder="Shown to students before they join">
+      </div>
+
+      <div class="tabs mt-16" id="create-mode-tabs">
+        <button class="tab active" data-mode="json">Paste JSON</button>
+        <button class="tab" data-mode="text">Upload Text File</button>
+      </div>
+
+      <div id="mode-json" class="mt-16">
+        <div class="field">
+          <label for="questions-json">Questions (JSON array)</label>
+          <textarea id="questions-json" rows="10" class="mono" style="font-size:13px;" placeholder='[
+  {
+    "text": "What is the size of an int in Java?",
+    "optionA": "16 bit",
+    "optionB": "32 bit",
+    "optionC": "64 bit",
+    "optionD": "8 bit",
+    "correctOption": "B"
+  }
+]'></textarea>
+        </div>
+        <button class="btn btn-primary" id="create-json-btn">Create Test</button>
+      </div>
+
+      <div id="mode-text" class="hidden mt-16">
+        <div class="alert alert-info mono" style="font-size:12px; line-height:1.6; white-space:pre;">Q: What is the size of an int in Java?
+A) 16 bit
+B) 32 bit
+C) 64 bit
+D) 8 bit
+ANSWER: B
+
+Q: Next question here?
+A) ...
+B) ...
+C) ...
+D) ...
+ANSWER: A</div>
+        <div class="field mt-16">
+          <label for="questions-file">Questions file (.txt)</label>
+          <input type="file" id="questions-file" accept=".txt">
+        </div>
+        <button class="btn btn-primary" id="create-upload-btn">Upload &amp; Create Test</button>
+      </div>
+
+      <div id="create-error" class="alert alert-error hidden mt-16"></div>
+      <div id="create-success" class="alert alert-success hidden mt-16"></div>
+    </div>
+
+    <div class="card mt-24">
+      <h2 style="font-size:19px;">Your Tests</h2>
+      <div id="tests-list" class="mt-16"></div>
+    </div>
+  </div>
+
+  <!-- ============ WAITING ROOM ============ -->
+  <div class="tab-panel hidden" id="panel-waiting">
+    <div class="card mt-24">
+      <div class="spread">
+        <div class="field" style="margin:0; flex:1; max-width:360px;">
+          <label for="waiting-test-select">Test</label>
+          <select id="waiting-test-select"></select>
+        </div>
+        <button class="btn btn-success" id="approve-all-btn">Approve All Pending</button>
+      </div>
+      <div id="waiting-list" class="mt-24"></div>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS ============ -->
+  <div class="tab-panel hidden" id="panel-results">
+    <div class="card mt-24">
+      <div class="field" style="max-width:360px;">
+        <label for="results-test-select">Test</label>
+        <select id="results-test-select"></select>
+      </div>
+      <div id="results-table" class="mt-24"></div>
+    </div>
+  </div>
+<div style="text-align: center; padding: 32px 20px 24px; font-size: 11px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;">
+  Platform Developed by Azhar Khan
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

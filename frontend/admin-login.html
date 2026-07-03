@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container" style="max-width:420px; padding-top:96px;">
+  <div class="ticket">
+    <div class="ticket-header" style="justify-content:center;">
+      <div class="center-text" style="width:100%;">
+        <div class="seal" style="margin:0 auto 12px;">A</div>
+        <div class="ticket-eyebrow">Admin Access</div>
+        <h1 style="font-size:22px;">Sign In</h1>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <div id="login-error" class="alert alert-error hidden"></div>
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary btn-block" id="login-btn">Sign In</button>
+    </div>
+</div>
+<div style="text-align: center; padding: 24px 20px; font-size: 11px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;">
+  Platform Developed by Azhar Khan
+</div>
+<script src="js/api.js"></script>
+<script>
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const errEl = document.getElementById('login-error');
+  errEl.classList.add('hidden');
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  try {
+    const res = await apiRequest('/admin/login', { method: 'POST', body: { username, password } });
+    localStorage.setItem('adminToken', res.token);
+    window.location.href = 'admin.html';
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+});
+document.getElementById('password').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+</script>
+</body>
+</html>
