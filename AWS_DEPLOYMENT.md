@@ -54,8 +54,8 @@ Once connected to your EC2 instance, install Docker based on the OS you chose:
 # Update packages
 sudo dnf update -y  # Use "sudo yum update -y" on Amazon Linux 2
 
-# Install Docker
-sudo dnf install -y docker  # Use "sudo yum install -y docker" on Amazon Linux 2
+# Install Docker and Git
+sudo dnf install -y docker git  # Use "sudo yum install -y docker git" on Amazon Linux 2
 
 # Start and enable Docker service
 sudo systemctl start docker
@@ -82,8 +82,8 @@ ssh -i testplatform-key.pem ec2-user@<EC2_PUBLIC_IP>
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Install Docker
-sudo apt-get install -y docker.io
+# Install Docker and Git
+sudo apt-get install -y docker.io git
 
 # Install Docker Compose
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
