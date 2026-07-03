@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Take Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ JOIN VIEW ============ -->
+<div id="view-join" class="container">
+  <div class="ticket">
+    <div class="ticket-header">
+      <div>
+        <div class="ticket-eyebrow">Entry Slip</div>
+        <h1 id="join-title" style="font-size:24px;">Loading test…</h1>
+        <p class="muted mt-8" id="join-desc"></p>
+      </div>
+      <div class="seal">T</div>
+    </div>
+    <div class="ticket-body">
+      <div id="join-meta" class="row mt-8" style="margin-bottom:20px;"></div>
+      <div id="join-error" class="alert alert-error hidden"></div>
+
+      <div class="field">
+        <label for="test-code">Test ID</label>
+        <input type="text" id="test-code" placeholder="e.g. 1" inputmode="numeric">
+        <div class="field-hint">Ask your admin for the test link or ID.</div>
+      </div>
+      <div class="field">
+        <label for="student-name">Full Name</label>
+        <input type="text" id="student-name" placeholder="As you'd like it on your result">
+      </div>
+      <div class="field">
+        <label for="student-contact">Contact Number</label>
+        <input type="tel" id="student-contact" placeholder="10-digit mobile number">
+      </div>
+      <button class="btn btn-primary btn-block" id="join-btn">Request to Join</button>
+      <div style="text-align: center; margin-top: 16px;">
+        <a href="index.html" style="font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.15s; margin-right: 15px;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Home Page</a>
+        <a href="admin-login.html" style="font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Teacher Portal</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WAITING VIEW ============ -->
+<div id="view-waiting" class="container hidden">
+  <div class="ticket center-text">
+    <div class="ticket-header" style="justify-content:center;">
+      <div>
+        <div class="ticket-eyebrow">Status</div>
+        <h1 style="font-size:22px;">Waiting Room</h1>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <div class="pulse-ring">
+        <div class="dot" style="background:var(--amber); width:12px; height:12px;"></div>
+      </div>
+      <h2 style="font-size:18px;" id="waiting-status-text">Waiting for admin approval…</h2>
+      <p class="muted mt-8">Keep this tab open. You'll be let in automatically once approved.</p>
+      <div id="waiting-rejected" class="alert alert-error hidden mt-24">
+        Your request was not approved for this test. Please contact the admin.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INSTRUCTIONS VIEW ============ -->
+<div id="view-instructions" class="container hidden">
+  <div class="ticket">
+    <div class="ticket-header">
+      <div>
+        <div class="ticket-eyebrow">You're Approved</div>
+        <h1 style="font-size:22px;">Before You Begin</h1>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <ul class="stack" style="padding-left:20px; margin:0; color:var(--ink-soft); font-size:14px; line-height:1.6;">
+        <li>The test opens in <strong>full-screen mode</strong>. Exiting full-screen will auto-submit your test.</li>
+        <li>Switching tabs or windows is tracked. After repeated switches your test is auto-submitted.</li>
+        <li>You have <strong id="instr-duration">--</strong> minutes once you start. The timer cannot be paused.</li>
+        <li>Answers are saved as you go — you can revisit and change them before submitting.</li>
+      </ul>
+      <button class="btn btn-primary btn-block mt-24" id="start-test-btn">Enter Full-Screen &amp; Start Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EXAM VIEW ============ -->
+<div id="view-exam" class="hidden">
+  <div class="exam-bar">
+    <div class="title" id="exam-title">Test</div>
+    <div class="timer" id="exam-timer">--:--</div>
+  </div>
+  <div class="container wide" style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;">
+    <div class="card" style="flex:2; min-width:300px;" id="question-panel"></div>
+    <div class="card" style="flex:1; min-width:220px; position:sticky; top:80px;">
+      <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin-bottom:14px;">Questions</h3>
+      <div class="qnav-grid" id="qnav-grid"></div>
+      <button class="btn btn-success btn-block mt-24" id="submit-btn">Submit Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT VIEW ============ -->
+<div id="view-result" class="container hidden">
+  <div class="ticket center-text">
+    <div class="ticket-header" style="justify-content:center;">
+      <div>
+        <div class="ticket-eyebrow" id="result-eyebrow">Submitted</div>
+        <h1 style="font-size:22px;">Test Complete</h1>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--accent);" id="result-score">--</div>
+      <p class="muted mt-8" id="result-sub">out of --</p>
+      <p class="mt-24" id="result-reason" style="font-size:13px; color:var(--muted);"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FULLSCREEN EXIT WARNING (auto-submits, this shows briefly) ============ -->
+<div id="overlay-fullscreen-exit" class="overlay hidden">
+  <div>
+    <h2 style="color:#fff;">Full-screen exited</h2>
+    <p class="mt-8">Your test is being submitted automatically.</p>
+  </div>
+</div>
+
+<!-- ============ TAB SWITCH WARNING ============ -->
+<div id="overlay-tab-warning" class="overlay hidden">
+  <div>
+    <h2 style="color:#fff;" id="tab-warning-title">Tab switch detected</h2>
+    <p class="mt-8" id="tab-warning-body"></p>
+    <button class="btn btn-primary mt-24" id="tab-warning-dismiss">Return to Test</button>
+  </div>
+</div>
+
+<!-- ============ SUBMIT CONFIRMATION OVERLAY ============ -->
+<div id="overlay-submit-confirm" class="overlay hidden">
+  <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card); max-width: 400px; width: 90%; color: var(--ink); text-align: center;">
+    <h2 style="font-size: 22px; margin-bottom: 8px; font-family: var(--font-display);">Submit Test?</h2>
+    <p class="muted mt-8" style="font-size: 14px; line-height: 1.5;">Are you sure you want to submit your test now? This action cannot be undone.</p>
+    <div class="row mt-24">
+      <button class="btn btn-outline" id="confirm-cancel-btn">Cancel</button>
+      <button class="btn btn-success" id="confirm-submit-btn">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; padding: 24px 20px; font-size: 11px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;">
+  Platform Developed by Azhar Khan
+</div>
+
+<script src="js/api.js?v=2"></script>
+<script src="js/student.js?v=2"></script>
+</body>
+</html>

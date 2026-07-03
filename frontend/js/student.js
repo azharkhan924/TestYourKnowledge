@@ -12,14 +12,28 @@ window.addEventListener('DOMContentLoaded', init);
 function init() {
   const params = new URLSearchParams(window.location.search);
   const t = params.get('test');
+  const nameVal = params.get('name');
+  const contactVal = params.get('contact');
+
   if (t) {
     document.getElementById('test-code').value = t;
     loadTestInfo(t);
   }
+  if (nameVal) {
+    document.getElementById('student-name').value = nameVal;
+  }
+  if (contactVal) {
+    document.getElementById('student-contact').value = contactVal;
+  }
+
   document.getElementById('test-code').addEventListener('change', (e) => {
     const val = e.target.value.trim();
     if (val) loadTestInfo(val);
   });
+
+  if (t && nameVal && contactVal) {
+    handleJoin();
+  }
   document.getElementById('join-btn').addEventListener('click', handleJoin);
   document.getElementById('start-test-btn').addEventListener('click', handleStartTest);
   document.getElementById('submit-btn').addEventListener('click', () => {

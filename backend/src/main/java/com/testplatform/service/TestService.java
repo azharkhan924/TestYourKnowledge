@@ -5,6 +5,7 @@ import com.testplatform.dto.QuestionDto;
 import com.testplatform.exception.ApiException;
 import com.testplatform.model.Question;
 import com.testplatform.model.Test;
+import com.testplatform.model.Teacher;
 import com.testplatform.repository.QuestionRepository;
 import com.testplatform.repository.TestRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class TestService {
         this.questionRepository = questionRepository;
     }
 
-    public Test createFromJson(CreateTestRequest request) {
+    public Test createFromJson(CreateTestRequest request, Teacher teacher) {
         validateTestMeta(request.getTitle(), request.getDurationMinutes());
         if (request.getQuestions() == null || request.getQuestions().isEmpty()) {
             throw ApiException.badRequest("At least one question is required");
@@ -35,6 +36,7 @@ public class TestService {
         test.setTitle(request.getTitle());
         test.setDescription(request.getDescription());
         test.setDurationMinutes(request.getDurationMinutes());
+        test.setTeacher(teacher);
         Test saved = testRepository.save(test);
 
         for (QuestionDto dto : request.getQuestions()) {
@@ -43,7 +45,7 @@ public class TestService {
         return testRepository.save(saved);
     }
 
-    public Test createFromTextUpload(String title, String description, Integer durationMinutes, MultipartFile file) {
+    public Test createFromTextUpload(String title, String description, Integer durationMinutes, MultipartFile file, Teacher teacher) {
         validateTestMeta(title, durationMinutes);
         String content;
         try {
@@ -57,6 +59,7 @@ public class TestService {
         test.setTitle(title);
         test.setDescription(description);
         test.setDurationMinutes(durationMinutes);
+        test.setTeacher(teacher);
         Test saved = testRepository.save(test);
 
         for (QuestionDto dto : parsed) {
@@ -65,8 +68,8 @@ public class TestService {
         return testRepository.save(saved);
     }
 
-    public List<Test> getAllTests() {
-        return testRepository.findAll();
+    public List<Test> getTestsByTeacher(Teacher teacher) {
+        return testRepository.findByTeacherOrderByIdDesc(teacher);
     }
 
     public Test getTestOrThrow(Long id) {

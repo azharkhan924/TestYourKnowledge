@@ -2,160 +2,488 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Take Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TestYourKnowledge - Secure Online Assessment Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+  /* Landing page customized styling (complements style.css) */
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .header-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .brand {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand .seal-sm {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.15s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  .nav-btn {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-weight: 600;
+  }
+
+  .nav-btn:hover {
+    background: var(--accent-dark);
+    color: #fff;
+  }
+
+  /* Hero section */
+  .hero-section {
+    padding: 60px 20px;
+    background-image: radial-gradient(circle at 1px 1px, rgba(41, 84, 166, 0.08) 1.5px, transparent 0);
+    background-size: 24px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .hero-text h1 {
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .feature-bullets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .feature-bullets {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .bullet-icon {
+    color: var(--success);
+    font-weight: 700;
+  }
+
+  /* Features block */
+  .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-title h2 {
+    font-size: 32px;
+    color: var(--ink);
+  }
+
+  .section-title p {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 8px;
+  }
+
+  .features-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    padding: 0 20px;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: 0 1px 2px rgba(27,42,74,0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .feature-card-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: inline-block;
+    color: var(--accent);
+  }
+
+  .feature-card h3 {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Info sections */
+  .info-section {
+    padding: 80px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .info-section.alt {
+    background: #fcfdfe;
+  }
+
+  .info-container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .about-content {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  .about-text h3 {
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  /* Contact section */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .contact-info-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(41, 84, 166, 0.08);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-details h4 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+
+  .contact-details p {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .contact-details a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .contact-details a:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
 
-<!-- ============ JOIN VIEW ============ -->
-<div id="view-join" class="container">
-  <div class="ticket">
-    <div class="ticket-header">
-      <div>
-        <div class="ticket-eyebrow">Entry Slip</div>
-        <h1 id="join-title" style="font-size:24px;">Loading test…</h1>
-        <p class="muted mt-8" id="join-desc"></p>
-      </div>
-      <div class="seal">T</div>
-    </div>
-    <div class="ticket-body">
-      <div id="join-meta" class="row mt-8" style="margin-bottom:20px;"></div>
-      <div id="join-error" class="alert alert-error hidden"></div>
+<header>
+  <div class="header-container">
+    <a href="index.html" class="brand">
+      <div class="seal-sm">T</div>
+      <span>TestYourKnowledge</span>
+    </a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="admin-login.html" class="nav-btn">Teacher Portal</a>
+    </nav>
+  </div>
+</header>
 
-      <div class="field">
-        <label for="test-code">Test ID</label>
-        <input type="text" id="test-code" placeholder="e.g. 1" inputmode="numeric">
-        <div class="field-hint">Ask your admin for the test link or ID.</div>
+<!-- ============ HERO SECTION ============ -->
+<div class="hero-section">
+  <div class="hero-container">
+    <div class="hero-text">
+      <h1>Secure, Reliable &amp; Automated Testing</h1>
+      <p>An elegant, exam-focused platform designed to preserve assessment integrity. Enforce full-screen rules, track candidate tab switches, and approve entries in real-time.</p>
+      
+      <div class="feature-bullets">
+        <div class="bullet-item">
+          <span class="bullet-icon">✓</span>
+          <span><strong>Tab Track Proctored:</strong> Anti-cheat warnings and auto-submission</span>
+        </div>
+        <div class="bullet-item">
+          <span class="bullet-icon">✓</span>
+          <span><strong>Full-Screen Lock:</strong> Discourages copy-pasting and window switching</span>
+        </div>
+        <div class="bullet-item">
+          <span class="bullet-icon">✓</span>
+          <span><strong>Teacher Waiting Room:</strong> Real-time student approval dashboards</span>
+        </div>
+        <div class="bullet-item">
+          <span class="bullet-icon">✓</span>
+          <span><strong>Multiple Teachers:</strong> Each teacher manages their own test lists</span>
+        </div>
       </div>
-      <div class="field">
-        <label for="student-name">Full Name</label>
-        <input type="text" id="student-name" placeholder="As you'd like it on your result">
+    </div>
+
+    <!-- JOIN CARD (Directly embedded from take-test.html) -->
+    <div class="ticket">
+      <div class="ticket-header">
+        <div>
+          <div class="ticket-eyebrow">Student Entry Slip</div>
+          <h2 style="font-size:22px;">Join a Test</h2>
+        </div>
+        <div class="seal">T</div>
       </div>
-      <div class="field">
-        <label for="student-contact">Contact Number</label>
-        <input type="tel" id="student-contact" placeholder="10-digit mobile number">
-      </div>
-      <button class="btn btn-primary btn-block" id="join-btn">Request to Join</button>
-      <div style="text-align: center; margin-top: 16px;">
-        <a href="admin-login.html" style="font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Admin Portal</a>
+      <div class="ticket-body">
+        <div id="landing-error" class="alert alert-error hidden"></div>
+        <form id="join-form">
+          <div class="field">
+            <label for="landing-test-code">Test ID</label>
+            <input type="text" id="landing-test-code" placeholder="e.g. 5" inputmode="numeric" required>
+            <div class="field-hint">Ask your teacher for the Test ID.</div>
+          </div>
+          <div class="field">
+            <label for="landing-student-name">Full Name</label>
+            <input type="text" id="landing-student-name" placeholder="As you'd like on your scorecard" required>
+          </div>
+          <div class="field">
+            <label for="landing-student-contact">Contact Number</label>
+            <input type="tel" id="landing-student-contact" placeholder="10-digit mobile number" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Request to Join</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============ WAITING VIEW ============ -->
-<div id="view-waiting" class="container hidden">
-  <div class="ticket center-text">
-    <div class="ticket-header" style="justify-content:center;">
-      <div>
-        <div class="ticket-eyebrow">Status</div>
-        <h1 style="font-size:22px;">Waiting Room</h1>
+<!-- ============ FEATURES SECTION ============ -->
+<div class="info-section alt" id="features">
+  <div class="info-container">
+    <div class="section-title">
+      <h2>Advanced Testing Features</h2>
+      <p>Built with modern anti-cheat proctoring tools and administrative controls.</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-card-icon">👁️</span>
+        <h3>Anti-Cheat Proctored</h3>
+        <p>Tracks tab changes and unfocused windows. Warns candidates and auto-submits tests on repeated violations.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card-icon">🖥️</span>
+        <h3>Full-Screen Lock</h3>
+        <p>Forces full-screen mode on exam launch. Auto-submits attempts if candidates attempt to minimize the browser.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card-icon">⌛</span>
+        <h3>Waiting Room Approval</h3>
+        <p>Allows teachers to verify candidate credentials in a real-time lobby prior to allowing entry to the assessment.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card-icon">✉️</span>
+        <h3>OTP Login for Teachers</h3>
+        <p>Secure authentication using 6-digit email OTPs. Register and access tests instantly with a secure verify flow.</p>
       </div>
     </div>
-    <div class="ticket-body">
-      <div class="pulse-ring">
-        <div class="dot" style="background:var(--amber); width:12px; height:12px;"></div>
-      </div>
-      <h2 style="font-size:18px;" id="waiting-status-text">Waiting for admin approval…</h2>
-      <p class="muted mt-8">Keep this tab open. You'll be let in automatically once approved.</p>
-      <div id="waiting-rejected" class="alert alert-error hidden mt-24">
-        Your request was not approved for this test. Please contact the admin.
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- ============ INSTRUCTIONS VIEW ============ -->
-<div id="view-instructions" class="container hidden">
-  <div class="ticket">
-    <div class="ticket-header">
-      <div>
-        <div class="ticket-eyebrow">You're Approved</div>
-        <h1 style="font-size:22px;">Before You Begin</h1>
+<!-- ============ ABOUT SECTION ============ -->
+<div class="info-section" id="about">
+  <div class="info-container">
+    <div class="about-content">
+      <div class="about-text">
+        <h3>About the Platform</h3>
+        <p>TestYourKnowledge is a state-of-the-art secure examination platform built to assist educational institutions, teachers, and recruiters in evaluating candidate skills transparently.</p>
+        <p>By enforcing client-side constraints such as browser visibility audits and fullscreen lockdowns, the platform bridges the gap between remote testing convenience and exam room discipline.</p>
+        <p>Each teacher maintains full ownership of their tests, questions bank, waitlists, and comprehensive candidate results, which are secure under their authenticated teacher email.</p>
       </div>
-    </div>
-    <div class="ticket-body">
-      <ul class="stack" style="padding-left:20px; margin:0; color:var(--ink-soft); font-size:14px; line-height:1.6;">
-        <li>The test opens in <strong>full-screen mode</strong>. Exiting full-screen will auto-submit your test.</li>
-        <li>Switching tabs or windows is tracked. After repeated switches your test is auto-submitted.</li>
-        <li>You have <strong id="instr-duration">--</strong> minutes once you start. The timer cannot be paused.</li>
-        <li>Answers are saved as you go — you can revisit and change them before submitting.</li>
-      </ul>
-      <button class="btn btn-primary btn-block mt-24" id="start-test-btn">Enter Full-Screen &amp; Start Test</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ EXAM VIEW ============ -->
-<div id="view-exam" class="hidden">
-  <div class="exam-bar">
-    <div class="title" id="exam-title">Test</div>
-    <div class="timer" id="exam-timer">--:--</div>
-  </div>
-  <div class="container wide" style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;">
-    <div class="card" style="flex:2; min-width:300px;" id="question-panel"></div>
-    <div class="card" style="flex:1; min-width:220px; position:sticky; top:80px;">
-      <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin-bottom:14px;">Questions</h3>
-      <div class="qnav-grid" id="qnav-grid"></div>
-      <button class="btn btn-success btn-block mt-24" id="submit-btn">Submit Test</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ RESULT VIEW ============ -->
-<div id="view-result" class="container hidden">
-  <div class="ticket center-text">
-    <div class="ticket-header" style="justify-content:center;">
-      <div>
-        <div class="ticket-eyebrow" id="result-eyebrow">Submitted</div>
-        <h1 style="font-size:22px;">Test Complete</h1>
+      <div class="about-text" style="background: rgba(41, 84, 166, 0.03); border: 1.5px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 32px;">
+        <h4 style="font-family: var(--font-display); font-size: 20px; color: var(--accent); margin: 0 0 12px 0;">Teacher Autonomy</h4>
+        <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">Teachers can upload questions instantly using bulk JSON definitions or plain text uploads. Real-time dashboards provide instant insights, showing detailed OMR submissions and auto-graded scores.</p>
+        <div style="font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; margin-top: 20px;">
+          Developed for modern evaluation standards.
+        </div>
       </div>
     </div>
-    <div class="ticket-body">
-      <div style="font-family:var(--font-display); font-size:56px; font-weight:700; color:var(--accent);" id="result-score">--</div>
-      <p class="muted mt-8" id="result-sub">out of --</p>
-      <p class="mt-24" id="result-reason" style="font-size:13px; color:var(--muted);"></p>
+  </div>
+</div>
+
+<!-- ============ CONTACT SECTION ============ -->
+<div class="info-section alt" id="contact">
+  <div class="info-container" style="max-width: 800px;">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Have questions, issues, or need help? Reach out directly using the details below.</p>
+    </div>
+    
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-info-icon">📞</div>
+        <div class="contact-details">
+          <h4>Phone Support</h4>
+          <p><a href="tel:+917067289757">+91 7067289757</a></p>
+        </div>
+      </div>
+      
+      <div class="contact-card">
+        <div class="contact-info-icon">✉️</div>
+        <div class="contact-details">
+          <h4>Email Support</h4>
+          <p><a href="mailto:azharkhan.ak2303@gmail.com">azharkhan.ak2303@gmail.com</a></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ============ FULLSCREEN EXIT WARNING (auto-submits, this shows briefly) ============ -->
-<div id="overlay-fullscreen-exit" class="overlay hidden">
-  <div>
-    <h2 style="color:#fff;">Full-screen exited</h2>
-    <p class="mt-8">Your test is being submitted automatically.</p>
+<!-- ============ FOOTER ============ -->
+<div style="text-align: center; padding: 40px 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); background: var(--card);">
+  <p>© 2026 TestYourKnowledge. All rights reserved.</p>
+  <div style="margin-top: 8px; font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; font-size: 11px;">
+    Platform Developed by Azhar Khan
   </div>
 </div>
 
-<!-- ============ TAB SWITCH WARNING ============ -->
-<div id="overlay-tab-warning" class="overlay hidden">
-  <div>
-    <h2 style="color:#fff;" id="tab-warning-title">Tab switch detected</h2>
-    <p class="mt-8" id="tab-warning-body"></p>
-    <button class="btn btn-primary mt-24" id="tab-warning-dismiss">Return to Test</button>
-  </div>
-</div>
-
-<!-- ============ SUBMIT CONFIRMATION OVERLAY ============ -->
-<div id="overlay-submit-confirm" class="overlay hidden">
-  <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card); max-width: 400px; width: 90%; color: var(--ink); text-align: center;">
-    <h2 style="font-size: 22px; margin-bottom: 8px; font-family: var(--font-display);">Submit Test?</h2>
-    <p class="muted mt-8" style="font-size: 14px; line-height: 1.5;">Are you sure you want to submit your test now? This action cannot be undone.</p>
-    <div class="row mt-24">
-      <button class="btn btn-outline" id="confirm-cancel-btn">Cancel</button>
-      <button class="btn btn-success" id="confirm-submit-btn">Submit Now</button>
-    </div>
-  </div>
-</div>
-
-<div style="text-align: center; padding: 24px 20px; font-size: 11px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;">
-  Platform Developed by Azhar Khan
-</div>
-
-<script src="js/api.js?v=2"></script>
-<script src="js/student.js?v=2"></script>
+<script>
+  document.getElementById('join-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const testId = document.getElementById('landing-test-code').value.trim();
+    const name = document.getElementById('landing-student-name').value.trim();
+    const contact = document.getElementById('landing-student-contact').value.trim();
+    
+    if (testId && name && contact) {
+      const url = `take-test.html?test=${encodeURIComponent(testId)}&name=${encodeURIComponent(name)}&contact=${encodeURIComponent(contact)}`;
+      window.location.href = url;
+    }
+  });
+</script>
 </body>
 </html>

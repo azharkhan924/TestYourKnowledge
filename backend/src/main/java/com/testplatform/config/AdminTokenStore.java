@@ -8,31 +8,52 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Simple in-memory token store for admin auth.
- * Good enough for a single-instance basic test platform; not meant for
- * multi-instance / production-grade deployments.
+ * Simple in-memory token store for teacher auth.
  */
 @Component
 public class AdminTokenStore {
 
     private static final long TOKEN_TTL_SECONDS = 12 * 60 * 60; // 12 hours
 
-    private final Map<String, Instant> tokens = new ConcurrentHashMap<>();
+    public static class TokenDetails {
+        private final String email;
+        private final Instant issuedAt;
 
-    public String issueToken() {
+        public TokenDetails(String email, Instant issuedAt) {
+            this.email = email;
+            this.issuedAt = issuedAt;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public Instant getIssuedAt() {
+            return issuedAt;
+        }
+    }
+
+    private final Map<String, TokenDetails> tokens = new ConcurrentHashMap<>();
+
+    public String issueToken(String email) {
         String token = UUID.randomUUID().toString();
-        tokens.put(token, Instant.now());
+        tokens.put(token, new TokenDetails(email, Instant.now()));
         return token;
     }
 
     public boolean isValid(String token) {
         if (token == null) return false;
-        Instant issuedAt = tokens.get(token);
-        if (issuedAt == null) return false;
-        if (Instant.now().isAfter(issuedAt.plusSeconds(TOKEN_TTL_SECONDS))) {
+        TokenDetails details = tokens.get(token);
+        if (details == null) return false;
+        if (Instant.now().isAfter(details.getIssuedAt().plusSeconds(TOKEN_TTL_SECONDS))) {
             tokens.remove(token);
             return false;
         }
         return true;
+    }
+
+    public String getEmail(String token) {
+        TokenDetails details = tokens.get(token);
+        return details != null ? details.getEmail() : null;
     }
 }

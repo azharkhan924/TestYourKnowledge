@@ -77,7 +77,7 @@ function renderTestsList() {
     return;
   }
   el.innerHTML = allTests.map(t => {
-    const link = window.location.origin + window.location.pathname.replace('admin.html', '') + 'index.html?test=' + t.id;
+    const link = window.location.origin + window.location.pathname.replace('admin.html', '') + 'take-test.html?test=' + t.id;
     return `
       <div class="spread" style="padding:14px 0; border-bottom:1px solid var(--border);">
         <div>
