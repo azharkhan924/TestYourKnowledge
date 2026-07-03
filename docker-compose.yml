@@ -1,0 +1,35 @@
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: testplatform-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: testplatform
+      POSTGRES_USER: testplatform_user
+      POSTGRES_PASSWORD: testplatform_secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: testplatform-backend
+    restart: always
+    ports:
+      - "80:8080"
+    environment:
+      - DB_HOST=postgres-db
+      - DB_PORT=5432
+      - DB_NAME=testplatform
+      - DB_USER=testplatform_user
+      - DB_PASSWORD=testplatform_secure_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres-db
+
+volumes:
+  pgdata:
