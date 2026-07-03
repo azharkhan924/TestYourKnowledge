@@ -54,8 +54,8 @@ Once connected to your EC2 instance, install Docker based on the OS you chose:
 # Update packages
 sudo dnf update -y  # Use "sudo yum update -y" on Amazon Linux 2
 
-# Install Docker, Git, and Buildx Plugin
-sudo dnf install -y docker git docker-buildx-plugin  # Use "sudo yum install -y docker git docker-buildx-plugin" on Amazon Linux 2
+# Install Docker and Git
+sudo dnf install -y docker git  # Use "sudo yum install -y docker git" on Amazon Linux 2
 
 # Start and enable Docker service
 sudo systemctl start docker
@@ -113,6 +113,8 @@ ssh -i testplatform-key.pem ubuntu@<EC2_PUBLIC_IP>
    ```bash
    docker-compose up -d --build
    ```
+   *(Note: If you receive a `requires buildx` error on Amazon Linux, run instead: `DOCKER_BUILDKIT=0 COMPOSE_DOCKER_CLI_BUILD=0 docker-compose up -d --build`)*
+   
    *The `--build` flag builds the Spring Boot app from the local `Dockerfile` (copying the frontend assets at compilation).*
    *The `-d` flag runs the containers in detached mode (background).*
 
