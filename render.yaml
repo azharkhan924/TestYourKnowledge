@@ -6,10 +6,8 @@ databases:
 services:
   - type: web
     name: testplatform-service
-    env: java
-    rootDir: backend
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/*.jar
+    runtime: docker
+    dockerfile: Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
